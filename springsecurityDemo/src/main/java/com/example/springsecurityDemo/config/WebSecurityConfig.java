@@ -6,28 +6,33 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 public class WebSecurityConfig   {
 
-    //24:23
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
     @Bean
     public UserDetailsService userDetailsService(){
         UserDetails normalUser= User
                 .withUsername("Pythonbot")
-                .password("12345678")
+                .password(passwordEncoder().encode("12345678"))
                 .roles("Role_normal")
                 .build();
         UserDetails AdminUser = User
                 .withUsername("Admin")
-                .password("12345678")
+                .password(passwordEncoder().encode("12345678"))
                 .roles("Role_admin")
                 .build();
         UserDetails ActiveUser = User
                 .withUsername("Active")
-                .password("12345678")
+                .password(passwordEncoder().encode("12345678"))
                 .roles("Role_active")
                 .build();
         return new InMemoryUserDetailsManager(normalUser,ActiveUser,AdminUser);
