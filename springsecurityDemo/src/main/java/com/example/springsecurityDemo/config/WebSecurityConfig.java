@@ -39,7 +39,7 @@ public class WebSecurityConfig   {
                 .roles("Active")
                 .build();
         return new InMemoryUserDetailsManager(normalUser,ActiveUser,AdminUser);*/
-        return  new CustomUserDetailsService;
+        return  new CustomUserDetailsService();
     }
 
 
